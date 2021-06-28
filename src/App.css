@@ -1,38 +1,76 @@
-.App {
-  text-align: center;
+/* div {
+    border: solid;
+} */
+.search  {
+    margin-right: 80px;
+    margin-left: auto;
+    width: 300px;
+    height: 10px;
+}
+.search input {
+    width: 300px;
+    height: 40px;
+    font-size: 20px;
+    padding-left: 10px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.searchResult {
+    width: 316px;
+    position: fixed;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.searchresultbutton {
+    position: relative;
+    width: 100%;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.modulesContainer {
+    width:100%;
+    position: relative;
 }
 
-.App-link {
-  color: #61dafb;
+.module {
+    position: absolute;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.timetable {
+    padding-top:350px;
 }
+
+table{
+    table-layout: fixed;
+    width: 80%;
+    margin: auto;
+    border: 1px solid black;
+}
+
+table#parameter {
+    table-layout: fixed;
+    width: 100%;
+    margin: auto;
+}
+
+th {
+    margin: auto;
+    border: 1px solid black;
+}
+
+tr {
+    width: 100%
+}
+
+td {
+    border: 1px solid black;
+}
+
+#timetablelink, #impossible{
+    width: 80%;
+    margin:auto;
+    text-align: center;
+    font-size: 30;
+}
+/* .searchResult p {
+    width: 310px;
+    margin: 10px;
+    font-size: 17px;
+} */
