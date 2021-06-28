@@ -115,6 +115,7 @@ function App() {
     fetch(backend+'post', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+      mode: "no-cors",
       body: JSON.stringify(parameters)
     })
       .then((response) => response.json())
