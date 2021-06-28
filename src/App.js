@@ -12,6 +12,7 @@ import EMPTY from "./components/timetable/empty.json"
  
 
 const LOCAL_STORAGE_KEY = 'todoApp.todos'
+const backend = "https://modnusmods.herokuapp.com/"
 
 function App() {
   const [todos, setTodos] = useState([])
@@ -23,6 +24,7 @@ function App() {
   const [link, setLink] = useState('')
   const [timetableData, setTimetableData] = useState(EMPTY)
   const [possible, setPossible] = useState(true)
+
   
 
   //Parameters
@@ -53,7 +55,7 @@ function App() {
 
     const storedTodos = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY))
     if (storedTodos) setTodos(storedTodos)
-    fetch('/time').then(res => res.json()).then(data => {setCurrentTime(data.time); console.log(data.time)});
+    fetch(backend + 'time').then(res => res.json()).then(data => {setCurrentTime(data.time); console.log(data.time)});
 
   }, [])
 
@@ -109,7 +111,7 @@ function App() {
     parameters.acadYear = "2021-2022"
     parameters.sem = "1"
     console.log(parameters);
-    fetch('/post', {
+    fetch(backend+'post', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(parameters)
