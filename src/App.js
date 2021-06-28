@@ -53,7 +53,7 @@ function App() {
 
     const storedTodos = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY))
     if (storedTodos) setTodos(storedTodos)
-    fetch('/time').then(res => res.json()).then(data => {setCurrentTime(data.time);});
+    fetch('/time').then(res => res.json()).then(data => {setCurrentTime(data.time); console.log(data.time)});
 
   }, [])
 
