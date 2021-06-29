@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/modnusmods/static/css/main.6e295330.chunk.css",
-    "main.js": "/modnusmods/static/js/main.b382b22a.chunk.js",
-    "main.js.map": "/modnusmods/static/js/main.b382b22a.chunk.js.map",
+    "main.js": "/modnusmods/static/js/main.bab8cf3b.chunk.js",
+    "main.js.map": "/modnusmods/static/js/main.bab8cf3b.chunk.js.map",
     "runtime-main.js": "/modnusmods/static/js/runtime-main.0b11d458.js",
     "runtime-main.js.map": "/modnusmods/static/js/runtime-main.0b11d458.js.map",
     "static/js/2.5667120f.chunk.js": "/modnusmods/static/js/2.5667120f.chunk.js",
@@ -15,6 +15,6 @@
     "static/js/runtime-main.0b11d458.js",
     "static/js/2.5667120f.chunk.js",
     "static/css/main.6e295330.chunk.css",
-    "static/js/main.b382b22a.chunk.js"
+    "static/js/main.bab8cf3b.chunk.js"
   ]
 }
