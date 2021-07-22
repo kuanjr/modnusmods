@@ -1,33 +1,70 @@
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, cloneElement } from 'react';
 import TodoList from './components/tutorial/TodoList'
 import { v4 as uuidv4 } from 'uuid'
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/bUTTON';
+import { createTheme, makeStyles, ThemeProvider } from '@material-ui/core/styles';
+import Divider from '@material-ui/core/Divider';
+
 import "./App.css"
-import SearchResult from './components/parameters/SearchResult'
-import ModuleList from './components/parameters/ModuleList';
 import Timetable from './components/timetable/Timetable';
-import Parameters from './components/parameters/Parameters';
+import ParametersBar from './components/inputcomponents/parameterbar/ParametersBar';
+import ModuleContainer from './components/inputcomponents/modulecontainer/ModuleContainer';
 import EMPTY from "./components/timetable/empty.json"
+
+
 
  
 
 const LOCAL_STORAGE_KEY = 'todoApp.todos'
-const backend = "https://modnusmods.herokuapp.com/"
+// const backend = "https://modnusmods.herokuapp.com/"
+
+const useStyles = makeStyles((theme) => ({
+  buttonContainer: {
+    justifyContent: "center"
+  },
+  indivbuttons: {
+    textAlign: "center"
+  }
+}));
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#324376"
+    }
+  },
+});
+
+const COLORS = ["#cc99ff",
+                "#99ccff",
+                "#ffcce6",
+                "#ffcc66",
+                "#99ff66",
+                "#0099ff",
+                "#ff4d4d",
+                "#ff99ff",
+                "#996633"] 
+
 
 function App() {
+  const classes = useStyles()
   const [todos, setTodos] = useState([])
   const todoNameRef = useRef()
   const [currentTime, setCurrentTime] = useState(0);
   const searchRef = useRef()
   const [searchTerm, setSearchTerm] = useState('');
   const [modules, setModules] = useState([])
+  const [modulesCopy, setModulesCopy] = useState([])
   const [link, setLink] = useState('')
   const [timetableData, setTimetableData] = useState(EMPTY)
   const [possible, setPossible] = useState(true)
+  const [colors, setColors] = useState(COLORS)
 
   
 
-  //Parameters
+  //inputcomponents
   const [startTime, setStartTime] = useState(8);
   const [endTime, setEndTime] = useState(20);
   const [timeBetween, setTimeBetween] = useState(0);
@@ -55,8 +92,9 @@ function App() {
 
     const storedTodos = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY))
     if (storedTodos) setTodos(storedTodos)
-    console.log(backend)
-    fetch(backend + 'time').then(res => res.json()).then(data => {setCurrentTime(data.time); console.log(data.time)});
+    // console.log(backend)
+    // fetch(backend + 'time').then(res => res.json()).then(data => {setCurrentTime(data.time); console.log(data.time)});
+    fetch('/time').then(res => res.json()).then(data => {setCurrentTime(data.time); console.log(data.time)});
 
   }, [])
 
@@ -85,16 +123,38 @@ function App() {
     setTodos(newTodos)
   }
 
-  function addModules(module) {
-    setModules(prevModules => {
-      return [...prevModules, module]
-    })
+  function addModules(module, title) {
     setSearchTerm("")
     searchRef.current.value = ""
+    const temp = modules
+    var exists = false
+    for (var index = 0; index < temp.length; index++) {
+      if (temp[index].modulecode === module) {
+        exists = true
+        return
+      }
+    }
+    if (!exists) {
+      var random = Math.floor((Math.random() * colors.length))
+      var color = colors[random]
+      var tempcolor = colors.filter(item => item !== color)
+      setColors(tempcolor)
+      setModules([...temp, {"modulecode": module, "title": title, "color": color}])
+    }
+
   }
+
+  const removeModule = (e) => {
+    const color = modules.filter(item => item.modulecode === e.currentTarget.getAttribute('name'))[0].color
+    const temp = modules.filter(item => item.modulecode !== e.currentTarget.getAttribute('name'))
+    setModules(temp)
+    setColors(prevColors => [...prevColors, color])
+  };
 
   function clearModules() {
     setModules([]);
+    setTimetableData(EMPTY)
+    setColors(COLORS)
   }
 
   function generate() {
@@ -108,11 +168,25 @@ function App() {
     parameters.lunchBreak = lunchBreak
     parameters.lessonMode = lessonMode
     parameters.dayFree = dayFree
-    parameters.modules = modules
+    parameters.modules = modules.map(module => module.modulecode)
     parameters.acadYear = "2021-2022"
     parameters.sem = "1"
     console.log(parameters);
-    fetch(backend+'post', {
+    // fetch(backend+'post', {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify(parameters)
+    // })
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     console.log(data)
+    //     if (data.possible){
+    //       setPossible(data.possible)
+    //       setTimetableData(data.timetable_json)
+    //       setLink(data.link)
+    //     }
+    //   });
+    fetch('/post', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(parameters)
@@ -121,15 +195,69 @@ function App() {
       .then((data) => {
         console.log(data)
         if (data.possible){
+          var temp = modules.map(item => item)
+          setModulesCopy(temp)
+          console.log(temp)
           setPossible(data.possible)
           setTimetableData(data.timetable_json)
           setLink(data.link)
+
         }
       });
+  }
+  function NumberOfUsers({number}) {
+    if (number === 1) {
+      const useStyles = makeStyles((theme) => ({
+        root: {
+          height: 400,
+          paddingLeft: 20,
+          paddingTop: 50,
+          paddingBottom: 20,
+        },
+      }));
+      return <ModuleContainer searchRef={searchRef} setSearchTerm={setSearchTerm} addModules={addModules} searchTerm={searchTerm} generate={generate} clearModules={clearModules} modules={modules} removeModule={removeModule} style={useStyles}/>
+    } else {
+      const useStyles = makeStyles((theme) => ({
+        root: {
+          height: 200,
+          paddingLeft: 20,
+          paddingTop: 20,
+          paddingBottom: 20,
+        },
+      }));
+      return (
+        <>
+          <ModuleContainer searchRef={searchRef} setSearchTerm={setSearchTerm} addModules={addModules} searchTerm={searchTerm} generate={generate} clearModules={clearModules} modules={modules} removeModule={removeModule} style={useStyles}/>
+          <Divider flexItem />
+          <ModuleContainer searchRef={searchRef} setSearchTerm={setSearchTerm} addModules={addModules} searchTerm={searchTerm} generate={generate} clearModules={clearModules} modules={modules} removeModule={removeModule} style={useStyles}/>
+        </>
+  
+      )
+    }
   }
 
   return (
     <>
+      <ParametersBar setStartTime={setStartTime} setEndTime={setEndTime} setTimeBetween={setTimeBetween} lunchBreak={lunchBreak} setLunchBreak={setLunchBreak} setLessonMode={setLessonMode} setDayFree={setDayFree}/>
+      {/* <NumberOfUsers number={1} /> */}
+      <ModuleContainer searchRef={searchRef} setSearchTerm={setSearchTerm} addModules={addModules} searchTerm={searchTerm} generate={generate} clearModules={clearModules} modules={modules} removeModule={removeModule} />
+      <Grid container spacing={2} className={classes.buttonContainer}>
+        <Grid item xs={3} className={classes.indivbuttons}>
+          <ThemeProvider theme={theme}>
+            <Button variant="contained" color="primary" onClick={generate}>
+              GENERATE
+            </Button>
+          </ThemeProvider>
+       </Grid>
+        <Grid item xs={3} className={classes.indivbuttons}>
+          <ThemeProvider theme={theme}>
+            <Button variant="contained" color="primary" onClick={clearModules}>
+              CLEAR ALL
+            </Button>
+          </ThemeProvider>
+        </Grid>
+      </Grid>
+      <Timetable link={link} timetableData={timetableData} possible={possible} modules={modulesCopy}/>
       {/* <div class="timetable"></div> */}
       {/* <TodoList todos={todos} toggleTodo={toggleTodo} />
       <input ref={todoNameRef} type="text" />
@@ -137,23 +265,6 @@ function App() {
       <button onClick={handleClearTodos}>Clear Complete</button>
       <div>{todos.filter(todo => !todo.complete).length} left to do</div> */}
       {/* <p>Current time is: {currentTime}</p> */}
-      <div className="parameters">
-        <Parameters setStartTime={setStartTime} setEndTime={setEndTime} setTimeBetween={setTimeBetween} lunchBreak={lunchBreak} setLunchBreak={setLunchBreak} setLessonMode={setLessonMode} setDayFree={setDayFree}/>
-      </div>
-      <div className="modulesContainer">
-        <div className="search">
-          <input ref={searchRef} type="text" placeholder="Search..." onChange={event => {setSearchTerm(event.target.value)}}/>
-          <SearchResult searchTerm={searchTerm} addModules={addModules} />
-          <button onClick={generate}>Generate!</button>
-          <button onClick={clearModules}>Clear all</button>
-        </div>
-        <div className="module">
-          <ModuleList modules={modules} />
-        </div>
-      </div>
-      <div className="timetable">
-        <Timetable link={link} timetableData={timetableData} possible={possible}/>
-      </div>
     </>
   )
 }

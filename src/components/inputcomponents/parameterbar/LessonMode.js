@@ -1,0 +1,32 @@
+import React from 'react'
+import makeStyles from '@material-ui/core/styles/makeStyles';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import TextField from "@material-ui/core/TextField"
+
+
+
+const useStyles = makeStyles((theme) => ({
+    inputs: {
+        minWidth: 200,
+        margin: theme.spacing(),
+    },
+  }));
+
+export default function LessonMode({ setLessonMode }) {
+    const classes = useStyles()
+    return (
+        <FormControl className={classes.inputs}>
+          <TextField
+          label="Online or Physical"
+          defaultValue=""
+          select
+          // onChange={event => setLessonMode(event.target.value)}
+          >
+            <MenuItem value={"online"}>Online</MenuItem>
+            <MenuItem value={"f2f"}>Physical</MenuItem>
+            <MenuItem value={"both"}>Both</MenuItem>
+          </TextField>
+        </FormControl>
+    )
+}
