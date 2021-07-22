@@ -18,7 +18,7 @@ import EMPTY from "./components/timetable/empty.json"
  
 
 const LOCAL_STORAGE_KEY = 'todoApp.todos'
-// const backend = "https://modnusmods.herokuapp.com/"
+const backend = "https://modnusmods.herokuapp.com/"
 
 const useStyles = makeStyles((theme) => ({
   buttonContainer: {
@@ -186,7 +186,7 @@ function App() {
     //       setLink(data.link)
     //     }
     //   });
-    fetch('/post', {
+    fetch(backend + '/post', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(parameters)
