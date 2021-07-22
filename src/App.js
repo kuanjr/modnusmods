@@ -186,7 +186,7 @@ function App() {
     //       setLink(data.link)
     //     }
     //   });
-    fetch(backend + '/post', {
+    fetch(backend + 'post', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(parameters)
