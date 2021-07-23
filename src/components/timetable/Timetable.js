@@ -41,8 +41,6 @@ export default function Timetable({ user, link, timetableData, possible, modules
 
 	const data = timetableData[user-1]
 	const colormap = modules[user-1]
-	console.log(timetableData[1])
-	console.log(user)
 
     return (
 	  <>

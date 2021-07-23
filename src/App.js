@@ -87,7 +87,7 @@ function App() {
     if (storedTodos) setTodos(storedTodos)
     // console.log(backend)
     // fetch(backend + 'time').then(res => res.json()).then(data => {setCurrentTime(data.time); console.log(data.time)});
-    fetch('/time').then(res => res.json()).then(data => {setCurrentTime(data.time); console.log(data.time)});
+    fetch(backend+'/time').then(res => res.json()).then(data => {setCurrentTime(data.time); console.log(data.time)});
 
   }, [])
 
@@ -214,7 +214,7 @@ function App() {
     //   });
     // "https://modnusmods.herokuapp.com/post"
       // "homepage": "http://kuanjr.github.io/modnusmods",
-    fetch("/post", {
+    fetch("https://modnusmods.herokuapp.com/post", {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(parameters)
