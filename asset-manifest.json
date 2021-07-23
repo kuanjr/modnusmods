@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/modnusmods/static/css/main.1c61165d.chunk.css",
-    "main.js": "/modnusmods/static/js/main.980a1316.chunk.js",
-    "main.js.map": "/modnusmods/static/js/main.980a1316.chunk.js.map",
-    "runtime-main.js": "/modnusmods/static/js/runtime-main.0b11d458.js",
-    "runtime-main.js.map": "/modnusmods/static/js/runtime-main.0b11d458.js.map",
-    "static/js/2.c04ea145.chunk.js": "/modnusmods/static/js/2.c04ea145.chunk.js",
-    "static/js/2.c04ea145.chunk.js.map": "/modnusmods/static/js/2.c04ea145.chunk.js.map",
-    "index.html": "/modnusmods/index.html",
-    "static/css/main.1c61165d.chunk.css.map": "/modnusmods/static/css/main.1c61165d.chunk.css.map",
-    "static/js/2.c04ea145.chunk.js.LICENSE.txt": "/modnusmods/static/js/2.c04ea145.chunk.js.LICENSE.txt"
+    "main.css": "/static/css/main.29b9e2af.chunk.css",
+    "main.js": "/static/js/main.d97e801e.chunk.js",
+    "main.js.map": "/static/js/main.d97e801e.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.0e1c4a7e.js",
+    "runtime-main.js.map": "/static/js/runtime-main.0e1c4a7e.js.map",
+    "static/js/2.a6d1dd2b.chunk.js": "/static/js/2.a6d1dd2b.chunk.js",
+    "static/js/2.a6d1dd2b.chunk.js.map": "/static/js/2.a6d1dd2b.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/main.29b9e2af.chunk.css.map": "/static/css/main.29b9e2af.chunk.css.map",
+    "static/js/2.a6d1dd2b.chunk.js.LICENSE.txt": "/static/js/2.a6d1dd2b.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.0b11d458.js",
-    "static/js/2.c04ea145.chunk.js",
-    "static/css/main.1c61165d.chunk.css",
-    "static/js/main.980a1316.chunk.js"
+    "static/js/runtime-main.0e1c4a7e.js",
+    "static/js/2.a6d1dd2b.chunk.js",
+    "static/css/main.29b9e2af.chunk.css",
+    "static/js/main.d97e801e.chunk.js"
   ]
 }
