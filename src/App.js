@@ -87,7 +87,7 @@ function App() {
     if (storedTodos) setTodos(storedTodos)
     // console.log(backend)
     // fetch(backend + 'time').then(res => res.json()).then(data => {setCurrentTime(data.time); console.log(data.time)});
-    fetch(backend+'/time').then(res => res.json()).then(data => {setCurrentTime(data.time); console.log(data.time)});
+    fetch('/time').then(res => res.json()).then(data => {setCurrentTime(data.time); console.log(data.time)});
 
   }, [])
 
@@ -222,13 +222,16 @@ function App() {
       .then((response) => response.json())
       .then((data) => {
         console.log(data)
+        var temp = modules.map(item => item)
+        setModulesCopy(temp)
+        setPossible(data.possible)
+        setLink(data.link)
         if (data.possible){
-          var temp = modules.map(item => item)
-          setModulesCopy(temp)
-          setPossible(data.possible)
           setTimetableData(data.timetable_json)
           setLink(data.link)
           console.log(timetableData)
+        } else {
+          setTimetableData([EMPTY, EMPTY])
         }
       });
   }
