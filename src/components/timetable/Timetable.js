@@ -9,7 +9,6 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-
 const useStyles = makeStyles((theme) => ({
 	timetable: {
 		background: "grey",
@@ -29,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 	}
   }));
 
-export default function Timetable({link, timetableData, possible, modules}) {
+export default function Timetable({ user, link, timetableData, possible, modules }) {
 	const classes = useStyles();
     var rows = []
     for (var i = 8; i < 20; i++) {
@@ -40,47 +39,14 @@ export default function Timetable({link, timetableData, possible, modules}) {
 		var impossible = <p id="impossible">We couldn't find a timetable for you :( <br/> Try changing your parameters</p>
 	}
 
-    // var Tue = []
-    // for (i = 0; i < 26; i++) {
-    //     Tue.push(<TimeCell />)
-    // }
-    // var Wed = []
-    // for (i = 0; i < 26; i++) {
-    //     Wed.push(<TimeCell />)
-    // }
-    // var Thur = []
-    // for (i = 0; i < 26; i++) {
-    //     Thur.push(<TimeCell />)
-    // }
-    // var Fri = []
-    // for (i = 0; i < 26; i++) {
-    //     Fri.push(<TimeCell />)
-    // }
-    // console.log(rows)
+	const data = timetableData[user-1]
+	const colormap = modules[user-1]
+	console.log(timetableData[1])
+	console.log(user)
+
     return (
-    <div className="timetable">
+	  <>
 		{impossible}
-        {/* <table id="timtable">
-			<tr>
-                <th colSpan={2}></th>
-                {rows.map(row => row)}
-            </tr>
-            <tr>
-                <TimeRow day={"Mon"} schedule={timetableData[0]} />
-            </tr>
-            <tr>
-                <TimeRow day={"Tue"} schedule={timetableData[1]} />
-            </tr>
-            <tr>
-                <TimeRow day={"Wed"} schedule={timetableData[2]} />
-            </tr>
-            <tr>
-                <TimeRow day={"Thur"} schedule={timetableData[3]} />
-            </tr>
-            <tr>
-				<TimeRow day={"Fri"} schedule={timetableData[4]} />
-            </tr>
-        </table> */}
 		 <TableContainer component={Paper} className={classes.timetable}>
 			<Table>
 				<TableHead>
@@ -91,19 +57,19 @@ export default function Timetable({link, timetableData, possible, modules}) {
 				</TableHead>
 				<TableBody>
 					<TableRow className={classes.tablerow}>
-						<TimeRow day={"Mon"} schedule={timetableData[0]} modules={modules}/>
+						<TimeRow day={"Mon"} schedule={data[0]} modules={colormap}/>
 					</TableRow>
 					<TableRow className={classes.tablerow}>
-						<TimeRow day={"Tue"} schedule={timetableData[1]} modules={modules}/>						
+						<TimeRow day={"Tue"} schedule={data[1]} modules={colormap}/>						
 					</TableRow>
 					<TableRow className={classes.tablerow}>
-						<TimeRow day={"Wed"} schedule={timetableData[2]} modules={modules}/>						
+						<TimeRow day={"Wed"} schedule={data[2]} modules={colormap}/>						
 					</TableRow>
 					<TableRow className={classes.tablerow}>
-						<TimeRow day={"Thur"} schedule={timetableData[3]} modules={modules}/>					
+						<TimeRow day={"Thur"} schedule={data[3]} modules={colormap}/>					
 					</TableRow>
 					<TableRow className={classes.tablerow}>
-						<TimeRow day={"Fri"} schedule={timetableData[4]} modules={modules}/>
+						<TimeRow day={"Fri"} schedule={data[4]} modules={colormap}/>
 					</TableRow>
 				</TableBody>
 			</Table>
@@ -203,6 +169,6 @@ export default function Timetable({link, timetableData, possible, modules}) {
 			<td align="center" height="50">Phy</td>
 		</tr>
 	</table> */}
-    </div>
+	  </>
     )
 }

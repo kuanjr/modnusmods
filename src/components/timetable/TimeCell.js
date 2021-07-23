@@ -7,17 +7,16 @@ import { Typography } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
 	tablecell: {
+        height: 60,
         border: "solid",
         borderWidth: 0.1,
         padding: 0,
-        borderColor: "#e6e6e6"
-
+        borderColor: "#e6e6e6",
 	},
-    lessonCell: {
-        minHeight: 50,
+    lessonCellRoot: {
+        height: 50,
         padding: 5,
-        margin: 1
-
+        margin: 1,
     },
     info: {
         fontSize: 15,
@@ -33,9 +32,9 @@ export default function TimeCell({ name, duration, lessonType, modules }) {
         var color = modules.filter(item => item.modulecode === name)[0].color
         // console.log(color)
         return <TableCell colSpan={duration} className={classes.tablecell}>
-                    <Card className={classes.lessonCell} style={{backgroundColor: color}}>
-                        <Typography className={classes.info}>{name}</Typography>
-                        <Typography className={classes.info}>{lessonType}</Typography>
+                    <Card className={classes.lessonCellRoot} style={{backgroundColor: color}}>
+                        <Typography className={classes.info} noWrap>{name}</Typography>
+                        <Typography className={classes.info} noWrap>{lessonType}</Typography>
                     </Card>
             </TableCell>
     }

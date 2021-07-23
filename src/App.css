@@ -17,8 +17,9 @@ body {
 .searchResult {
     width: 80%;
     margin: auto;
-    max-height: 300px;
+    max-height: 120px;
     overflow: auto;
+    z-index: 1;
 }
 
 

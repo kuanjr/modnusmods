@@ -11,6 +11,8 @@ const useStyles = makeStyles((theme) => ({
       borderRadius: 12,
     },
     cardHeaderRoot: {
+        padding: 0,
+        paddingLeft: 5,
         overflow: "hidden",
     },
     cardHeaderContent: {
@@ -19,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   
   }));
 
-export default function Module({ modules, removeModule }) {
+export default function Module({ modules, removeModule, user }) {
     const classes = useStyles()
     return (
         <Grid item xs={4}>
@@ -30,7 +32,7 @@ export default function Module({ modules, removeModule }) {
                 content: classes.cardHeaderContent
               }}
               action={
-                <IconButton aria-label="cancel" onClick={removeModule} name={modules.modulecode}>
+                <IconButton aria-label="cancel" onClick={e=>removeModule(e, user)} name={modules.modulecode}>
                   <ClearIcon />
                 </IconButton>
               }

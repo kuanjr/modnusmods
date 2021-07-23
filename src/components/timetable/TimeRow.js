@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function TimeRow({day, schedule, modules}) {
     const classes = useStyles();
+    // console.log(schedule)
     return (
         <>
             <TableCell colSpan={2} className={classes.tablecell}>{day}</TableCell>
