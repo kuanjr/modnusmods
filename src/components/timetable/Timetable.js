@@ -82,7 +82,7 @@ export default function Timetable({ user, link, timetableData, modules, loading}
 		</TableContainer>
 		{loading && <CircularProgress size={100} className={classes.loading} />}
 		<Paper id="timetablelink" elevation={10} className={classes.link}>
-			<Link href={link} target="_blank" variant="subtitle1" style={{maxWidth: "100"}}>{link}</Link>
+			<Link href={link} target="_blank" variant="subtitle1" style={{maxWidth: "100", color: "#e6e6e6"}}>{link}</Link>
 			{/* <a  href={link} target="_blank">{link}</a> */}
 		</Paper>
 
