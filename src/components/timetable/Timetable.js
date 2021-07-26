@@ -29,11 +29,12 @@ const useStyles = makeStyles((theme) => ({
 		// borderColor: "#e6e6e6"
 	},
 	loading: {
-		position: "absolute",
-		top: 630,
+		position: "relative",
+		top: -300,
 		left: "50%",
 		zIndex: 1,
-		color: "#e6e6e6"
+		color: "#e6e6e6",
+		marginBottom: -180
 	},
 	link: {
 		maxHeight: 50,
