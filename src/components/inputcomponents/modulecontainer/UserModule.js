@@ -28,11 +28,11 @@ export default function UserModule( { user, setUser, searchRef, searchRef2, setS
                 <Grid item xs={10} />
                   <Grid item xs={2} container>
                     <Grid item xs={4} style={{textAlign: "center"}}>
-                      <IconButton>
+                      <IconButton style={{color: "grey"}}>
                         <AddIcon onClick={handleonclick}/>
                       </IconButton>
                     </Grid>
-                    <Grid item xs={8} style={{paddingTop: 12}}>
+                    <Grid item xs={8} style={{paddingTop: 12, color: "grey"}}>
                       <Typography>ADD USER</Typography> 
                     </Grid>
                   </Grid>  
@@ -60,11 +60,11 @@ export default function UserModule( { user, setUser, searchRef, searchRef2, setS
                 <Grid item xs={10} />
                   <Grid item xs={2} container>
                     <Grid item xs={4} style={{textAlign: "center"}}>
-                      <IconButton>
+                      <IconButton style={{color: "grey"}}>
                         <RemoveIcon onClick={handleonclick} />
                       </IconButton>
                     </Grid>
-                    <Grid item xs={8} style={{paddingTop: 12}}>
+                    <Grid item xs={8} style={{paddingTop: 12, color: "grey"}}>
                       <Typography>REMOVE USER</Typography> 
                     </Grid>
                   </Grid>  

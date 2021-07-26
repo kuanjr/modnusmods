@@ -9,9 +9,11 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import { Link } from '@material-ui/core';
+import { CircularProgress } from '@material-ui/core';
+
 const useStyles = makeStyles((theme) => ({
 	timetable: {
-		background: "grey",
 		minWidth: 1080,
 		margin: "auto"
 	},
@@ -25,27 +27,32 @@ const useStyles = makeStyles((theme) => ({
 		borderRight: "solid #e6e6e6",
 		borderWidth: 1,
 		// borderColor: "#e6e6e6"
+	},
+	loading: {
+		position: "relative",
+		top: -200,
+		left: "50%",
+		zIndex: 1000
+	},
+	link: {
+		maxHeight: 50,
+		backgroundColor: "grey"
 	}
   }));
 
-export default function Timetable({ user, link, timetableData, possible, modules }) {
+
+export default function Timetable({ user, link, timetableData, modules, loading}) {
 	const classes = useStyles();
     var rows = []
     for (var i = 8; i < 20; i++) {
         rows.push(<TimeColumn time={i} />)
     }
 
-	if (!possible && link === "") {
-		var impossible = <p id="impossible">We couldn't find a timetable for you :( <br/> Try changing your parameters</p>
-	}
-
 	const data = timetableData[user-1]
 	const colormap = modules[user-1]
-
     return (
 	  <>
-		{impossible}
-		 <TableContainer component={Paper} className={classes.timetable}>
+		 <TableContainer component={Paper} className={classes.timetable} style={{backgroundColor: loading ? "#595959" : "grey"}}>
 			<Table>
 				<TableHead>
 					<TableRow className={classes.tablerow}>
@@ -72,10 +79,13 @@ export default function Timetable({ user, link, timetableData, possible, modules
 				</TableBody>
 			</Table>
 		</TableContainer>
-		<div id="timetablelink">
-			<br/>
-			<a  href={link} target="_blank">{link}</a>
-		</div>
+		
+		{loading && <CircularProgress size={100} className={classes.loading} />}
+		<Paper id="timetablelink" elevation={10} className={classes.link}>
+			<Link href={link} target="_blank" variant="subtitle1" style={{maxWidth: "100"}}>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</Link>
+			{/* <a  href={link} target="_blank">{link}</a> */}
+		</Paper>
+
 	{/* <table border="5" cellspacing="0" align="center">
 		
 		<tr>

@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { Paper } from '@material-ui/core';
 
 
-export default function TimetableContainer( {user, link, timetableData, possible, modules}) {
+export default function TimetableContainer( {user, link, timetableData, modules, loading}) {
     const [userTimetable, setUserTimetable] = useState(0)
     function handleOnChange(e, newValue) {
         setUserTimetable(newValue)
@@ -22,7 +22,7 @@ export default function TimetableContainer( {user, link, timetableData, possible
     }
 
     if (user === 1) {
-        return (<Timetable user={user} link={link} timetableData={timetableData} possible={possible} modules={modules}/>)
+        return (<Timetable user={user} link={link} timetableData={timetableData} modules={modules} loading={loading}/>)
     } else {
         return (
           <>
@@ -31,10 +31,10 @@ export default function TimetableContainer( {user, link, timetableData, possible
               <Tab label="User 2" style={{backgroundColor: "grey"}}/>
             </Tabs>
             <TabPanel value={userTimetable} index={0}>
-                <Timetable user={1} link={link} timetableData={timetableData} possible={possible} modules={modules}/>
+                <Timetable user={1} link={link} timetableData={timetableData} modules={modules} loading={loading}/>
               </TabPanel>
               <TabPanel value={userTimetable} index={1}>
-                <Timetable user={2} link={link} timetableData={timetableData} possible={possible} modules={modules}/>
+                <Timetable user={2} link={link} timetableData={timetableData} modules={modules} loading={loading}/>
               </TabPanel>
           </>
         )

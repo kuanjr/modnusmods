@@ -26,7 +26,7 @@ body {
 
 .timetable {
     /* padding-left: 90px; */
-    padding-top:100px;
+    padding-top:50px;
     overflow-x: auto;
     overflow-y: hidden;
 }
@@ -37,9 +37,14 @@ table{
 }
 
 #timetablelink, #impossible{
-    width: 80%;
+    width: 100%;
     margin:auto;
     text-align: center;
+    overflow-x: auto;
+    white-space: nowrap;
     font-size: 30;
+    padding-top: 10px;
+    padding-bottom: 10px
+
 }
 

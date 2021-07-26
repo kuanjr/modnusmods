@@ -5,6 +5,10 @@ import { v4 as uuidv4 } from 'uuid'
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/bUTTON';
 import { createTheme, makeStyles, ThemeProvider } from '@material-ui/core/styles';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+
+
 
 
 import "./App.css"
@@ -52,7 +56,6 @@ const COLORS = ["#cc99ff",
 function App() {
   const classes = useStyles()
   const [todos, setTodos] = useState([])
-  const todoNameRef = useRef()
   const [currentTime, setCurrentTime] = useState(0);
   const searchRef = useRef()
   const searchRef2 = useRef()
@@ -64,6 +67,9 @@ function App() {
   const [link, setLink] = useState(['', ''])
   const [timetableData, setTimetableData] = useState([EMPTY, EMPTY])
   const [possible, setPossible] = useState(true)
+  const [error, setError] = useState("")
+  const [generated, setGenerated] = useState(false)
+  const [loading, setLoading] = useState(false)
   // const userProps1 = {searchRef={searchRef}, setSearchTerm={setSearchTerm}, addModules={addModules}, searchTerm={searchTerm}, modules={modules}, removeModule={removeModule}}
   // const userProps2 = userProps1.add
 
@@ -95,27 +101,6 @@ function App() {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(todos))
   }, [todos])
 
-  function toggleTodo(id) {
-    const newTodos = [...todos]
-    const todo = newTodos.find(todo => todo.id === id)
-    todo.complete = !todo.complete
-    setTodos(newTodos)
-  }
-
-  function handleAddTodo(e) {
-    const name = todoNameRef.current.value
-    if (name === '') return
-    setTodos(prevTodos => {
-      return [...prevTodos, { id: uuidv4(), name: name, complete: false}]
-    })
-    todoNameRef.current.value = null
-  }
-
-  function handleClearTodos() {
-    const newTodos = todos.filter(todo => !todo.complete)
-    setTodos(newTodos)
-  }
-
   function addModules(module, title, user) {
     user === 1 ? searchRef.current.value = "" : searchRef2.current.value = ""
     var tsearch = searchTerm.map(item => item)
@@ -132,33 +117,12 @@ function App() {
     if (!exists) {
       var random = Math.floor((Math.random() * colors.length))
       var color = colors[user-1][random]
-      // var tempcolor = colors.filter(item => item !== color)
       var tempcolor = colors[user-1].filter(item => item !== color)
       setColors(prevColors => {prevColors[user-1] = tempcolor; return prevColors})
       setModules(prevModules => {prevModules[user-1] = [...temp, {"modulecode": module, "title": title, "color": color}]; return prevModules})
-      // console.log("modules: " + modules)
     }
   }
 
-  // function addModules2(module, title) {
-  //   setSearchTerm2("")
-  //   searchRef2.current.value = ""
-  //   const temp = modules2
-  //   var exists = false
-  //   for (var index = 0; index < temp.length; index++) {
-  //     if (temp[index].modulecode === module) {
-  //       exists = true
-  //       return
-  //     }
-  //   }
-  //   if (!exists) {
-  //     var random = Math.floor((Math.random() * colors2.length))
-  //     var color = colors2[random]
-  //     var tempcolor = colors2.filter(item => item !== color)
-  //     setColors2(tempcolor)
-  //     setModules2([...temp, {"modulecode": module, "title": title, "color": color}])
-  //   }
-  // }
 
   function removeModule(e, user) {
     const color = modules[user-1].filter(item => item.modulecode === e.currentTarget.getAttribute('name'))[0].color
@@ -171,13 +135,6 @@ function App() {
     setColors(()=> {prevColors[user-1] = [...prevColors[user-1], color]; return prevColors})
   };
 
-  // const removeModule2 = (e) => {
-  //   const color = modules.filter(item => item.modulecode === e.currentTarget.getAttribute('name'))[0].color
-  //   const temp = modules.filter(item => item.modulecode !== e.currentTarget.getAttribute('name'))
-  //   setModules2(temp)
-  //   setColors2(prevColors => [...prevColors, color])
-  // };
-
   function clearModules() {
     setModules([[],[]]);
     setTimetableData([EMPTY, EMPTY])
@@ -185,7 +142,6 @@ function App() {
   }
 
   function generate() {
-    
     var parameters = {}
     parameters.startTime = startTime
     parameters.endTime = endTime
@@ -198,22 +154,8 @@ function App() {
     parameters.sem = "1"
     parameters.user = user
     console.log(parameters);
-    // fetch(backend+'post', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify(parameters)
-    // })
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     console.log(data)
-    //     if (data.possible){
-    //       setPossible(data.possible)
-    //       setTimetableData(data.timetable_json)
-    //       setLink(data.link)
-    //     }
-    //   });
-    // "https://modnusmods.herokuapp.com/post"
-      // "homepage": "http://kuanjr.github.io/modnusmods",
+    setLoading(true)
+    // "homepage": "http://kuanjr.github.io/modnusmods",
     fetch("https://modnusmods.herokuapp.com/post", {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -226,14 +168,28 @@ function App() {
         setModulesCopy(temp)
         setPossible(data.possible)
         setLink(data.link)
+        setGenerated(true)
+        setLoading(false)
         if (data.possible){
           setTimetableData(data.timetable_json)
           setLink(data.link)
           console.log(timetableData)
         } else {
+          setError(data.error)
           setTimetableData([EMPTY, EMPTY])
         }
       });
+  }
+  
+  function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+  }
+
+  const handleOnClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setGenerated(false)
   }
   
 
@@ -241,8 +197,6 @@ function App() {
     <>
       <ParametersBar setStartTime={setStartTime} setEndTime={setEndTime} setTimeBetween={setTimeBetween} lunchBreak={lunchBreak} setLunchBreak={setLunchBreak} setLessonMode={setLessonMode} setDayFree={setDayFree}/>
       <UserModule user={user} setUser={setUser} searchRef={searchRef} searchRef2={searchRef2} setSearchTerm={setSearchTerm} addModules={addModules} searchTerm={searchTerm} modules={modules} removeModule={removeModule}/>
-      {/* <ModuleContainer searchRef={searchRef} setSearchTerm={setSearchTerm} addModules={addModules} searchTerm={searchTerm} generate={generate} clearModules={clearModules} modules={modules} removeModule={removeModule} /> */}
-      {/* <ModuleContainer searchRef={searchRef} setSearchTerm={setSearchTerm} addModules={addModules} searchTerm={searchTerm} generate={generate} clearModules={clearModules} modules={modules} removeModule={removeModule} /> */}
       <Grid container spacing={2} className={classes.buttonContainer}>
         <Grid item xs={3} className={classes.indivbuttons}>
           <ThemeProvider theme={theme}>
@@ -259,19 +213,17 @@ function App() {
           </ThemeProvider>
         </Grid>
       </Grid>
-      {/* <Timetable user={1} link={link} timetableData={timetableData} possible={possible} modules={modules}/> */}
       <div className="timetable">
-      <TimetableContainer user={user} link={link} timetableData={timetableData} possible={possible} modules={modulesCopy} />
+        <TimetableContainer user={user} link={link} timetableData={timetableData} modules={modulesCopy} loading={loading}/>
       </div>
-      {/* <TimetableContainer user={user} link={link} timetableData={timetableData} possible={possible} modules={modulesCopy} /> */}
-      
-      {/* <div class="timetable"></div> */}
-      {/* <TodoList todos={todos} toggleTodo={toggleTodo} />
-      <input ref={todoNameRef} type="text" />
-      <button onClick={handleAddTodo}>Add Todo</button>
-      <button onClick={handleClearTodos}>Clear Complete</button>
-      <div>{todos.filter(todo => !todo.complete).length} left to do</div> */}
-      {/* <p>Current time is: {currentTime}</p> */}
+      <Snackbar open={!possible && generated} autoHideDuration={6000} onClose={handleOnClose}>
+        <Alert severity="info">
+          {error}
+        </Alert>
+        {/* <Alert severity="info">
+          {error}
+        </Alert> */}
+      </Snackbar>
     </>
   )
 }
