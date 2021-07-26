@@ -29,10 +29,11 @@ const useStyles = makeStyles((theme) => ({
 		// borderColor: "#e6e6e6"
 	},
 	loading: {
-		position: "relative",
-		top: -200,
+		position: "absolute",
+		top: 630,
 		left: "50%",
-		zIndex: 1000
+		zIndex: 1,
+		color: "#e6e6e6"
 	},
 	link: {
 		maxHeight: 50,
@@ -79,10 +80,9 @@ export default function Timetable({ user, link, timetableData, modules, loading}
 				</TableBody>
 			</Table>
 		</TableContainer>
-		
 		{loading && <CircularProgress size={100} className={classes.loading} />}
 		<Paper id="timetablelink" elevation={10} className={classes.link}>
-			<Link href={link} target="_blank" variant="subtitle1" style={{maxWidth: "100"}}>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</Link>
+			<Link href={link} target="_blank" variant="subtitle1" style={{maxWidth: "100"}}>{link}</Link>
 			{/* <a  href={link} target="_blank">{link}</a> */}
 		</Paper>
 
